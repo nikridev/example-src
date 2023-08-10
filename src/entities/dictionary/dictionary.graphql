@@ -1,0 +1,123 @@
+fragment DictionaryElementFull on DictionaryElement {
+  id
+  fullName
+  shortName
+  active
+  code
+  dictionaryCode
+  exclusionDate
+  hierarchyGroup
+  inclusionDate
+  orderNumber
+  parentCode
+  parent {
+    shortName
+    id
+  }
+  relatedDictElement {
+    code
+    shortName
+    fullName
+  }
+  relatedDictElements {
+    id
+    code
+    dictionaryCode
+    fullName
+    shortName
+  }
+  attributes {
+    id
+    name
+    value
+  }
+}
+
+query DictionaryGetListElements($dictionaryCode: String!) {
+  getDictionaryElementsByDictionaryCode(input: $dictionaryCode) {
+    ...DictionaryElementFull
+  }
+}
+
+query GetDictionaryElementsByFilter($input: DictionaryElementFilterRequestInput!) {
+  getDictionaryElementsByFilter(input: $input) {
+    ...DictionaryElementFull
+  }
+}
+
+query GetMvzElementsByFilter($input: MvzFilterRequestInput!) {
+  getMvzElementsByFilter(input: $input) {
+    code
+    fullName
+    id
+    parentCode
+    hierarchyGroup
+    active
+    department
+    exclusionDate
+    hierarchyCode
+    inclusionDate
+    mvzType
+    orderNumber
+    relatedDictElementCode
+    shortName
+  }
+}
+query GetCostPlanningDictionaryElementsByFilter($input: CostPlanningFilterRequestInput!) {
+  getDictionaryElementsByFilterWithCostPlanning(input: $input) {
+    code
+    fullName
+    id
+    parentCode
+    hierarchyGroup
+    shortName
+  }
+}
+
+fragment DictionaryFull on Dictionary {
+  id
+  name
+  code
+  active
+  hierarchy
+  relatedDictionary {
+    id
+    name
+    code
+  }
+  relatedDictionaries {
+    id
+    code
+    name
+  }
+}
+
+query ListDictionary($input: DictionaryFilterRequestInput!) {
+  listDictionary(input: $input) {
+    ...DictionaryFull
+  }
+}
+
+query GetDictionaryById($input: Long!) {
+  dictionaryById(input: $input) {
+    ...DictionaryFull
+  }
+}
+
+mutation UpdateDictionary($input: DictionaryInput!) {
+  updateDictionary(input: $input) {
+    ...DictionaryFull
+  }
+}
+
+mutation CreateDictionaryElement($input: DictionaryElementInput!) {
+  createDictionaryElement(input: $input) {
+    ...DictionaryElementFull
+  }
+}
+
+mutation UpdateDictionaryElement($input: DictionaryElementInput!) {
+  updateDictionaryElement(input: $input) {
+    ...DictionaryElementFull
+  }
+}
